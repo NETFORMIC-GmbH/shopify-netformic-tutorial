@@ -1,0 +1,13 @@
+#[environments.development]
+#theme = "123456789012"
+#store = "my-store"
+#password  = "shptka_123456"
+#ignore = "sections/header.liquid"
+
+[environments.development]
+store = "https://netformic-tutorial.myshopify.com/"
+#path = "./dist"
+#ignore = ["sections/announcement-bar.liquid", "sections/header.liquid"]
+#output = "json"
+#live = true
+#allow-live = true

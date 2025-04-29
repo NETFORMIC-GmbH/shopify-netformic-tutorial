@@ -1,0 +1,45 @@
+{
+  "article": [],
+  "blog": [],
+  "collection": [],
+  "company": [],
+  "company_location": [],
+  "location": [],
+  "market": [],
+  "order": [],
+  "page": [],
+  "product": [
+    {
+      "key": "size",
+      "namespace": "custom",
+      "name": "Size",
+      "description": "Asia Size ",
+      "type": {
+        "name": "list.number_integer",
+        "category": "NUMBER"
+      }
+    },
+    {
+      "key": "wearing_size",
+      "namespace": "custom",
+      "name": "Wearing Size",
+      "description": "Size of the product that the model is wearing in the campaign",
+      "type": {
+        "name": "single_line_text_field",
+        "category": "TEXT"
+      }
+    },
+    {
+      "key": "model_info",
+      "namespace": "custom",
+      "name": "Model Info",
+      "description": "Details of the model’s measurements",
+      "type": {
+        "name": "metaobject_reference",
+        "category": "REFERENCE"
+      }
+    }
+  ],
+  "variant": [],
+  "shop": []
+}
