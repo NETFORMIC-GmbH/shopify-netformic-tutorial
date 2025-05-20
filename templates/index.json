@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Deployment from Github 2025",
+            "heading": "Deployment from Github Netformic 2025",
             "heading_size": "h0"
           }
         },
@@ -36,7 +36,7 @@
         "button"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
+        "image_overlay_opacity": 70,
         "image_height": "large",
         "image_behavior": "none",
         "desktop_content_position": "bottom-center",
