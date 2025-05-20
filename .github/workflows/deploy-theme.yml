@@ -24,4 +24,5 @@ jobs:
             --json \
             --theme ${{ secrets.SHOPIFY_THEME_ID }} \
             --store ${{ secrets.SHOPIFY_STORE_DOMAIN }} \
-            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }} \
+            --allow-live
