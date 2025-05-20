@@ -15,7 +15,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Deployment from Netformic Github PHP storm",
+            "heading": "Deployment from Netformic Github with phpstorm",
             "heading_size": "h0"
           }
         },
