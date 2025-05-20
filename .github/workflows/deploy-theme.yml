@@ -1,0 +1,33 @@
+name: Deploy Theme to Shopify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Push theme to Shopify
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Authenticate with Shopify
+        run: |
+          shopify config set --store=${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          echo "${{ secrets.SHOPIFY_CLI_TOKEN }}" > /tmp/token.txt
+          shopify login --access-token "$(cat /tmp/token.txt)"
+
+      - name: Deploy theme to Shopify
+        run: |
+          shopify theme push --theme-id=${{ secrets.SHOPIFY_THEME_ID }} --path=.
