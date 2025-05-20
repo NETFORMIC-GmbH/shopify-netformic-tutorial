@@ -1,27 +1,26 @@
-name: Check merchant-theme rebased on PR to main
+name: Ensure merchant-theme is merged
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   check-merchant-theme:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # fetch full history to run git commands
+          fetch-depth: 0  # Full history to compare branches
 
-      - name: Fetch merchant-theme branch
+      - name: Fetch merchant-theme
         run: git fetch origin merchant-theme
 
-      - name: Check if merchant-theme is ancestor of PR branch
+      - name: Ensure PR branch includes merchant-theme
         run: |
           if git merge-base --is-ancestor origin/merchant-theme HEAD; then
-            echo "merchant-theme is merged/rebased in this branch."
+            echo "✅ merchant-theme is included"
           else
-            echo "::error::Branch must be rebased with merchant-theme."
+            echo "::error::❌ This PR is not rebased with merchant-theme"
             exit 1
           fi
