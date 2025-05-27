@@ -1,4 +1,4 @@
-name: Shopify Merchant Theme Sync PR
+name: Create PR from merchant-theme to main on Shopify push
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
       - name: Check for differences between merchant-theme and main
         id: diff-check
         run: |
+          # Exit code 0 means no diff, 1 means diff exists
           if git diff --quiet origin/main...HEAD; then
             echo "no_diff=true" >> $GITHUB_OUTPUT
           else
@@ -48,7 +49,7 @@ jobs:
             const { data: prs } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: `${context.repo.owner}:merchant-theme-pr`,
+              head: `${context.repo.owner}:merchant-theme`,
               base: 'main',
               state: 'open',
             });
