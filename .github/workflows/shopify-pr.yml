@@ -1,0 +1,72 @@
+name: Shopify Merchant Theme Sync PR
+
+on:
+  push:
+    branches:
+      - merchant-theme
+
+jobs:
+  create-or-update-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout merchant-theme branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # needed for full history and diffing
+
+      - name: Fetch main branch for comparison
+        run: git fetch origin main
+
+      - name: Check for differences between merchant-theme and main
+        id: diff-check
+        run: |
+          if git diff --quiet origin/main...HEAD; then
+            echo "no_diff=true" >> $GITHUB_OUTPUT
+          else
+            echo "no_diff=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create or update pull request
+        if: steps.diff-check.outputs.no_diff == 'false'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Auto PR: Sync merchant-theme changes"
+          title: "Sync merchant-theme changes into main"
+          body: |
+            This PR was automatically created by CI to merge merchant theme changes into main.
+          base: main
+          head: merchant-theme
+          draft: false
+
+      - name: Close redundant PR if no changes detected
+        if: steps.diff-check.outputs.no_diff == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:merchant-theme-pr`,
+              base: 'main',
+              state: 'open',
+            });
+
+            if (prs.length > 0) {
+              const prNumber = prs[0].number;
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: "No new changes detected compared to main. Closing this PR to avoid duplication.",
+              });
+
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                state: "closed"
+              });
+            }
