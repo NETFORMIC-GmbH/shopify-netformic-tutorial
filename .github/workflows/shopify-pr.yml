@@ -27,6 +27,11 @@ jobs:
             echo "no_diff=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Create temporary branch for PR
+        run: |
+          git checkout -b merchant-theme-pr
+          git push -u origin merchant-theme-pr --force
+
       - name: Create or update pull request
         if: steps.diff-check.outputs.no_diff == 'false'
         uses: peter-evans/create-pull-request@v5
@@ -37,7 +42,7 @@ jobs:
           body: |
             This PR was automatically created by CI to merge merchant theme changes into main.
           base: main
-          branch: merchant-theme
+          branch: merchant-theme-pr
           draft: false
 
       - name: Close redundant PR if no changes detected
@@ -49,7 +54,7 @@ jobs:
             const { data: prs } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: `${context.repo.owner}:merchant-theme`,
+              head: `${context.repo.owner}:merchant-theme-pr`,
               base: 'main',
               state: 'open',
             });
