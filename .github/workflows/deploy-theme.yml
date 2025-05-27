@@ -1,3 +1,17 @@
+# This GitHub Actions workflow deploys the Shopify theme automatically
+# whenever changes are pushed to the 'main' branch.
+#
+# Workflow details:
+# - Triggered on push events to the 'main' branch.
+# - Checks out the latest code from the 'main' branch.
+# - Sets up Node.js environment.
+# - Installs Shopify CLI globally.
+# - Runs the Shopify CLI command to push the theme to the Shopify store.
+# - Uses secrets for theme ID, store domain, and CLI password for secure authentication.
+#
+# This automation ensures that approved and merged changes on 'main'
+# are deployed immediately to the live Shopify store.
+
 name: Deploy Theme to Shopify
 
 on:
