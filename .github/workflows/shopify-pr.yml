@@ -36,7 +36,7 @@ jobs:
           body: |
             This PR was automatically created by CI to merge merchant theme changes into main.
           base: main
-          head: merchant-theme
+          branch: merchant-theme
           draft: false
 
       - name: Close redundant PR if no changes detected
