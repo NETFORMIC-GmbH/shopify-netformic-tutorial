@@ -1,3 +1,15 @@
+# This GitHub Actions workflow runs on Pull Requests targeting the 'main' branch.
+# It verifies that the PR branch has been rebased or merged with the 'merchant-theme' branch.
+# This ensures that the latest merchant changes from Shopify (in 'merchant-theme') are included
+# in the feature or release branches before merging into 'main'.
+#
+# Steps:
+# - Checks out the PR branch with full commit history.
+# - Fetches the latest 'merchant-theme' branch for comparison.
+# - Uses 'git merge-base' to check if 'merchant-theme' is an ancestor of the PR branch.
+# - Fails the job with an error if the PR branch is not rebased/merged with 'merchant-theme',
+#   enforcing that developers keep in sync with merchant changes.
+
 name: Check merchant-theme rebased on PR to main
 
 on:

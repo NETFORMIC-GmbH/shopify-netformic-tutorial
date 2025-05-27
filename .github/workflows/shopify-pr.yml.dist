@@ -1,3 +1,22 @@
+# This GitHub Actions workflow automatically creates or updates a Pull Request
+# from the 'merchant-theme' branch (where Shopify pushes merchant changes)
+# to the 'main' branch for review and merging.
+#
+# Key workflow steps:
+# 1. Checks out the 'merchant-theme' branch with full history for accurate diffing.
+# 2. Fetches the latest 'main' branch to compare changes.
+# 3. Checks if there are any new changes in 'merchant-theme' compared to 'main'.
+# 4. If changes exist, creates a temporary branch 'merchant-theme-pr' based on
+#    'merchant-theme' and force pushes it to remote.
+# 5. Creates or updates a Pull Request from 'merchant-theme-pr' to 'main'.
+# 6. If no changes exist, it closes any redundant open PRs from 'merchant-theme-pr' to 'main'.#
+
+# NOTE
+# The reason this is a '.dist' file is to serve as a template or reference configuration.
+# It can be copied and customized locally to avoid accidental changes to the main CI workflow.
+# This pattern helps manage environment-specific or sensitive settings safely.
+
+
 name: Create PR from merchant-theme to main on Shopify push
 
 on:
